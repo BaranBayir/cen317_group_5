@@ -1,4 +1,5 @@
 using System.ComponentModel.DataAnnotations;
+using Application.DTOs.Addresses;
 
 namespace Application.DTOs.Auth;
 
@@ -18,4 +19,6 @@ public class RegisterRequest
 
     [Required, Compare(nameof(Password))]
     public string ConfirmPassword { get; set; } = string.Empty;
+
+    public AddressRequest? Address { get; set; }
 }

@@ -1,5 +1,6 @@
 @API_HostAddress = https://localhost:7205
 @csrfToken = REPLACE_WITH_REQUEST_TOKEN
+@addressId = 1
 
 # Cookie'leri istekler arasında koruyun. CSRF cevabındaki requestToken'ı yukarıya yapıştırın.
 GET {{API_HostAddress}}/api/auth/csrf
@@ -35,6 +36,47 @@ X-CSRF-TOKEN: {{csrfToken}}
 
 GET {{API_HostAddress}}/api/auth/me
 Accept: application/json
+
+###
+
+GET {{API_HostAddress}}/api/addresses
+Accept: application/json
+
+###
+
+GET {{API_HostAddress}}/api/addresses/{{addressId}}
+Accept: application/json
+
+###
+
+POST {{API_HostAddress}}/api/addresses
+Content-Type: application/json
+X-CSRF-TOKEN: {{csrfToken}}
+
+{
+  "title": "Ev",
+  "city": "Istanbul",
+  "district": "Kadikoy",
+  "addressLine": "Ornek Mahallesi, Ornek Sokak No: 10 Daire: 2"
+}
+
+###
+
+PUT {{API_HostAddress}}/api/addresses/{{addressId}}
+Content-Type: application/json
+X-CSRF-TOKEN: {{csrfToken}}
+
+{
+  "title": "Is",
+  "city": "Istanbul",
+  "district": "Besiktas",
+  "addressLine": "Ornek Caddesi No: 20 Daire: 3"
+}
+
+###
+
+DELETE {{API_HostAddress}}/api/addresses/{{addressId}}
+X-CSRF-TOKEN: {{csrfToken}}
 
 ###
 

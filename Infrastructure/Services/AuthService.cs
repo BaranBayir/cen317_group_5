@@ -1,11 +1,13 @@
 using Application.DTOs.Auth;
 using Application.Interfaces;
+using Domain.Entities;
 using Infrastructure.Data;
+using Infrastructure.Identity;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 
-namespace Infrastructure.Identity;
+namespace Infrastructure.Services;
 
 public class AuthService(
     UserManager<ApplicationUser> userManager,
@@ -29,7 +31,7 @@ public class AuthService(
             UserName = email
         };
 
-        // User creation and role assignment must either both succeed or both roll back.
+        // User, role assignment and optional address are saved in the same transaction.
         await using var transaction = await dbContext.Database.BeginTransactionAsync();
 
         try
@@ -50,6 +52,20 @@ public class AuthService(
             if (!roleResult.Succeeded)
             {
                 throw new InvalidOperationException("Could not assign the customer role.");
+            }
+
+            if (request.Address is not null)
+            {
+                dbContext.CustomerAddresses.Add(new CustomerAddress
+                {
+                    UserId = user.Id,
+                    Title = request.Address.Title.Trim(),
+                    City = request.Address.City.Trim(),
+                    District = request.Address.District.Trim(),
+                    AddressLine = request.Address.AddressLine.Trim()
+                });
+
+                await dbContext.SaveChangesAsync();
             }
 
             var response = await ToUserDtoAsync(user);

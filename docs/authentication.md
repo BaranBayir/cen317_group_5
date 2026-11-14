@@ -39,7 +39,9 @@ Tarayıcıda aynı origin'den yapılan `fetch` istekleri cookie'leri varsayılan
 
 Ad/soyad zorunlu ve en fazla 100 karakterdir. E-posta zorunlu, geçerli biçimde ve en fazla 255 karakter olmalıdır. Parola 8–128 karakter olmalı; mevcut Identity politikası büyük/küçük harf, rakam ve özel karakter de gerektirir. Parola tekrarı eşleşmelidir.
 
-Rol sunucuda daima `customer` olarak atanır. İstekten `role` veya `userId` alınmaz. Adres yönetimi ayrı aşamada eklenecektir.
+Rol sunucuda daima `customer` olarak atanır. İstekten `role` veya `userId` alınmaz.
+
+Kayıtta isteğe bağlı `address` nesnesi de gönderilebilir. Alan gönderilmezse veya `null` ise adres oluşturulmaz. Nesne gönderilirse `title`, `city`, `district` ve `addressLine` alanlarının tamamı zorunludur. Kullanıcı, rol ataması ve adres tek transaction içinde kaydedilir. Adres örneği ve yönetim endpoint'leri için [Adres API](addresses.md) belgesine bakın.
 
 ## Giriş gövdesi
 
