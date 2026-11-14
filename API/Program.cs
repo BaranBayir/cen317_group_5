@@ -1,4 +1,6 @@
 using System.Security.Claims;
+using API.Filters;
+using Application.Interfaces;
 using Infrastructure.Data;
 using Infrastructure.Identity;
 using Microsoft.AspNetCore.Identity;
@@ -49,7 +51,20 @@ builder.Services.ConfigureApplicationCookie(options =>
 
 builder.Services.AddAuthorization();
 
-builder.Services.AddControllers();
+builder.Services.AddScoped<IAuthService, AuthService>();
+
+builder.Services.AddAntiforgery(options =>
+{
+    options.HeaderName = "X-CSRF-TOKEN";
+    options.Cookie.Name = "Cen317Group5.Csrf";
+    options.Cookie.HttpOnly = true;
+    options.Cookie.SecurePolicy = CookieSecurePolicy.Always;
+    options.Cookie.SameSite = SameSiteMode.Strict;
+});
+
+builder.Services.AddScoped<ValidateAntiforgeryTokenFilter>();
+builder.Services.AddControllers(options =>
+    options.Filters.AddService<ValidateAntiforgeryTokenFilter>());
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddOpenApi();
 

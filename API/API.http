@@ -1,6 +1,45 @@
-@API_HostAddress = http://localhost:5193
+@API_HostAddress = https://localhost:7205
+@csrfToken = REPLACE_WITH_REQUEST_TOKEN
 
-GET {{API_HostAddress}}/weatherforecast/
+# Cookie'leri istekler arasında koruyun. CSRF cevabındaki requestToken'ı yukarıya yapıştırın.
+GET {{API_HostAddress}}/api/auth/csrf
 Accept: application/json
+
+###
+
+POST {{API_HostAddress}}/api/auth/register
+Content-Type: application/json
+X-CSRF-TOKEN: {{csrfToken}}
+
+{
+  "firstName": "Ada",
+  "lastName": "Yilmaz",
+  "email": "ada@example.com",
+  "password": "ExamplePass1!",
+  "confirmPassword": "ExamplePass1!"
+}
+
+###
+
+POST {{API_HostAddress}}/api/auth/login
+Content-Type: application/json
+X-CSRF-TOKEN: {{csrfToken}}
+
+{
+  "email": "ada@example.com",
+  "password": "ExamplePass1!",
+  "rememberMe": false
+}
+
+###
+
+GET {{API_HostAddress}}/api/auth/me
+Accept: application/json
+
+###
+
+# Login sonrasında GET /api/auth/csrf ile yeni token alıp csrfToken değişkenini güncelleyin.
+POST {{API_HostAddress}}/api/auth/logout
+X-CSRF-TOKEN: {{csrfToken}}
 
 ###
