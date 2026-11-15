@@ -85,3 +85,119 @@ POST {{API_HostAddress}}/api/auth/logout
 X-CSRF-TOKEN: {{csrfToken}}
 
 ###
+
+
+###
+GET {{API_HostAddress}}/api/restaurants
+Accept: application/json
+
+###
+GET {{API_HostAddress}}/api/restaurants/1/menu
+Accept: application/json
+
+ ###
+GET {{API_HostAddress}}/api/cart
+Accept: application/json
+ 
+###
+POST {{API_HostAddress}}/api/cart/items
+Content-Type: application/json
+X-CSRF-TOKEN: {{csrfToken}}
+
+{
+  "categoryItemId": 1,
+  "quantity": 1,
+  "optionIds": [1],
+  "addonIds": [1]
+}
+
+###
+PUT {{API_HostAddress}}/api/cart/items/1
+Content-Type: application/json
+X-CSRF-TOKEN: {{csrfToken}}
+
+{
+  "quantity": 2,
+  "optionIds": [1],
+  "addonIds": [1]
+}
+
+###
+DELETE {{API_HostAddress}}/api/cart/items/2
+X-CSRF-TOKEN: {{csrfToken}}
+
+###
+POST {{API_HostAddress}}/api/cart/items
+Content-Type: application/json
+X-CSRF-TOKEN: {{csrfToken}}
+
+{
+  "categoryItemId": 1,
+  "quantity": 1,
+  "optionIds": [],
+  "addonIds": []
+}
+
+  ###
+POST {{API_HostAddress}}/api/cart/items
+Content-Type: application/json
+X-CSRF-TOKEN: {{csrfToken}}
+
+{
+  "categoryItemId": 1,
+  "quantity": 1,
+  "optionIds": [999],
+  "addonIds": []
+}
+
+  ###
+POST {{API_HostAddress}}/api/cart/items
+Content-Type: application/json
+X-CSRF-TOKEN: {{csrfToken}}
+
+{
+  "categoryItemId": 1,
+  "quantity": 1,
+  "optionIds": [1],
+  "addonIds": [999]
+}
+###
+POST {{API_HostAddress}}/api/cart/items
+Content-Type: application/json
+X-CSRF-TOKEN: {{csrfToken}}
+
+{
+  "categoryItemId": 1,
+  "quantity": 1,
+  "optionIds": [1, 2],
+  "addonIds": []
+}
+###
+PUT {{API_HostAddress}}/api/cart/items/1
+Content-Type: application/json
+X-CSRF-TOKEN: {{csrfToken}}
+
+{
+  "quantity": 2,
+  "optionIds": [2],
+  "addonIds": [2]
+}
+###
+GET {{API_HostAddress}}/api/restaurants/2/menu
+Accept: application/json
+
+ ###
+POST {{API_HostAddress}}/api/cart/items
+Content-Type: application/json
+X-CSRF-TOKEN: {{csrfToken}}
+
+{
+  "categoryItemId": 5,
+  "quantity": 1,
+  "optionIds": [],
+  "addonIds": []
+}
+
+  ###
+GET {{API_HostAddress}}/api/cart
+Accept: application/json
